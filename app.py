@@ -3,7 +3,7 @@ import random
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-# Initialize Slack App using Socket Mode
+
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 JOKES = [
@@ -52,7 +52,8 @@ QUOTES = [
 ]
 
 @app.message("/mood")
-def handle_mood(message, say):
+def handle_mood(ack, say):
+    ack()
     user_text = message['text'].lower()
     
     if "happy" in user_text or "good" in user_text:
@@ -64,15 +65,17 @@ def handle_mood(message, say):
     else:
         say("How is your mood today? Type `/mood happy`, `/mood sad`, or `/mood ok` to let me know!")
 
-# FUNCTION 2: Random Joke Generator
+
 @app.message("/tellmeajoke")
-def handle_joke(message, say):
+def handle_joke(ack, say):
+    ack()
     random_joke = random.choice(JOKES)
     say(f"🃏 *Here is a joke to brighten your day:*\n\n{random_joke}")
 
-# FUNCTION 3: Random Quote Generator
+
 @app.message("/givemeaquote")
-def handle_quote(message, say):
+def handle_quote(ack, say):
+    ack()
     random_quote = random.choice(QUOTES)
     say(f"✨ *Here is your motivational reminder:*\n\n> \"{random_quote}\"")
 
