@@ -52,7 +52,7 @@ QUOTES = [
 ]
 
 @app.command("/mood")
-def handle_mood(ack body, say):
+def handle_mood(ack, body, say):
     ack()
     user_text = body.get('text', '').lower()
     
