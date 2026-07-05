@@ -23,19 +23,28 @@ const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 app.command('/mood', async ({ ack, respond }) => {
     await ack();
-    await respond("How are you feeling today? Remember to take a deep breath and a quick stretch! 🧘‍♂️");
+    await respond({
+        text: "How are you feeling today? Remember to take a deep breath and a quick stretch! 🧘‍♂️",
+        response_type: 'in_channel'
+    });
 });
 
 app.command('/tellmeajoke', async ({ ack, respond }) => {
     await ack();
     const randomJoke = getRandom(jokes);
-    await respond(`😂 Here is your joke:\n> ${randomJoke}`);
+    await respond({
+        text: `😂 Here is your joke:\n> ${randomJoke}`,
+        response_type: 'in_channel'
+    });
 });
 
 app.command('/givemeaquote', async ({ ack, respond }) => {
     await ack();
     const randomQuote = getRandom(quotes);
-    await respond(`✨ Inspirational Spark:\n> ${randomQuote}`);
+    await respond({
+        text: `✨ Inspirational Spark:\n> ${randomQuote}`,
+        response_type: 'in_channel'
+    });
 });
 
 (async () => {
@@ -46,4 +55,15 @@ app.command('/givemeaquote', async ({ ack, respond }) => {
 
     await app.start();
     console.log('⚡️ Slack Bolt app is running in Socket Mode!');
+
+    try {
+        await app.client.chat.postMessage({
+            token: process.env.SLACK_BOT_TOKEN,
+            channel: 'general',
+            text: "🚀 *Stardance Competition Bot is now Online!* 🚀\n\nTry out my interactive features right here in this workspace:\n• Type `/mood` to check in on your mental energy\n• Type `/tellmeajoke` for a quick coding laugh\n• Type `/givemeaquote` for some engineering inspiration!"
+        });
+        console.log('📢 Stardance launch broadcast sent successfully!');
+    } catch (error) {
+        console.error('❌ Failed to send Stardance launch broadcast:', error);
+    }
 })();
