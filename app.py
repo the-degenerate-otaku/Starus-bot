@@ -51,10 +51,10 @@ QUOTES = [
     "I love the smell of napalm in the morning. — Lt. Kilgore"
 ]
 
-@app.message("/mood")
-def handle_mood(ack, say):
+@app.command("/mood")
+def handle_mood(ack body, say):
     ack()
-    user_text = message['text'].lower()
+    user_text = body.get('text', '').lower()
     
     if "happy" in user_text or "good" in user_text:
         say("Awesome! I'm so glad to hear you're having a great day! Keep that momentum going! ☀️")
@@ -66,14 +66,14 @@ def handle_mood(ack, say):
         say("How is your mood today? Type `/mood happy`, `/mood sad`, or `/mood ok` to let me know!")
 
 
-@app.message("/tellmeajoke")
+@app.command("/tellmeajoke")
 def handle_joke(ack, say):
     ack()
     random_joke = random.choice(JOKES)
     say(f"🃏 *Here is a joke to brighten your day:*\n\n{random_joke}")
 
 
-@app.message("/givemeaquote")
+@app.command("/givemeaquote")
 def handle_quote(ack, say):
     ack()
     random_quote = random.choice(QUOTES)
