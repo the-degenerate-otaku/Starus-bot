@@ -1,0 +1,12 @@
+{
+  "name": "slack-mood-bot",
+  "version": "1.0.0",
+  "description": "Slack bot for mood checks, jokes, and quotes",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@slack/bolt": "^3.21.0"
+  }
+}
